@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+    <!--插入新用户-->
+        <insert id="save" parameterType="User">
+            insert into user values(#{id},#{username},#{sex},#{address})
+            <selectKey keyProperty="id" order="AFTER" resultType="integer">
+                select LAST_INSERT_ID()
+            </selectKey>
+        </insert>
+
+    <!--删除新用户-->
+    <delete id="deleteById" parameterType="integer">
+        delete from user where id = #{id}
+    </delete>
+
+    <!--更新用户-->
+    <update id="update" parameterType="User">
+        update user set username = #{username},sex = #{sex}, address = #{address}
+        where  id = #{id}
+    </update>
+
+    <!--查询所有用户-->
+    <select id="findAll" resultType="User">
+        select * from user
+    </select>
+
+    <!--基于ID 查询用户-->
+    <select id="findById" parameterType="integer" resultType="User">
+        select * from user where id = #{id}
+    </select>
+
+    <!--基于名称 查询用户-->
+    <select id="findByName" parameterType="string" resultType="User">
+        select * from user  where  username like concat('%',#{username},'%')
+    </select>
+</mapper>
