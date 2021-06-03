@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Spring_day03_01_ioc_crud_annotation" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Spring_day02_02_ioc_crud_xml" target="1.8" />
+      <module name="Spring_day02_day03_ioc_annotation" target="6" />
+      <module name="Spring_day03_01_ioc_crud_annotation" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
