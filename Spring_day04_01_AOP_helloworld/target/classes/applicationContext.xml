@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置service-->
+    <bean id="AccountService" class="com.itheima.service.impl.AccountServiceImpl"></bean>
+
+    <!--
+    Spring基于XML的AOP配置前期准备：
+        再Spirng的配置文件中加入AOP的约束
+
+    Spring基于XML的AOP配置步骤：
+        1，把通知日志切面类Bean交给Spring管理
+        2，使用AOP：config开始aop配置
+        3,使用aop:aspect配置切面
+        4，使用对应的标签配置通知的类型
+            入门案例采用前置通知，标签为aop:before
+        -->
+    <!--把通知日志切面类Bean交给Spring管理-->
+    <bean id="logUtil" class="com.itheima.utils.LogUtil"></bean>
+
+    <!--2，使用AOP：config开始aop配置-->
+    <aop:config>
+        <!--3,使用aop:aspect配置切面-->
+        <aop:aspect id="logUtil" ref="logUtil">
+            <!--4，使用对应的标签配置通知的类型-->
+            <aop:before method="printLog" pointcut="execution(public void com.itheima.service.impl.AccountServiceImpl.save())"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
