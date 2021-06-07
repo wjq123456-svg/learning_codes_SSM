@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置service-->
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl"></bean>
+
+    <!--配置AOP-->
+    <!--把通知日志切面类Bean交给Spring管理-->
+    <bean id="logUtil" class="com.itheima.utils.LogUtil"></bean>
+
+    <!--2，使用AOP：config开始aop配置-->
+    <aop:config>
+        <!--配置通用的切入点表达式-->
+        <aop:pointcut id="pc" expression="execution(* com.itheima.service..*.*(.. ))"/>
+        <!--配置切面-->
+        <aop:aspect id="logUtil" ref="logUtil">
+            <!--&lt;!&ndash;前置通知：执行时间：再切入点方法执行前执行&ndash;&gt;
+            <aop:before method="beforePrintLog" pointcut-ref="pc"></aop:before>
+            &lt;!&ndash;后置通知：执行时间：再切入点方法执行完成后，执行&ndash;&gt;
+            <aop:after-returning method="afterReturningPrintLog" pointcut-ref="pc" returning="returnValue"></aop:after-returning>
+            &lt;!&ndash;异常通知：执行时间：再切入点方法执行过程中抛出异常时，执行&ndash;&gt;
+            <aop:after-throwing method="afteThrowingPrintLog" pointcut-ref="pc" throwing="t" ></aop:after-throwing>
+            &lt;!&ndash;最终通知：执行时间：再切入点方法执行完成后，执行（不关心是否出现了异常 都会执行 类似与finally&ndash;&gt;
+            <aop:after-throwing method="afterPrintLog" pointcut-ref="pc"></aop:after-throwing>-->
+            <!--环绕通知：执行时间：围绕着切入点方法进行执行，更加灵活的对切入点方法进行增强-->
+            <aop:around method="around" pointcut-ref="pc"></aop:around>
+        </aop:aspect>
+    </aop:config>
+</beans>
