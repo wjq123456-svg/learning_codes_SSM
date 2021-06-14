@@ -1,13 +1,13 @@
 package com.itheima.service;
 
 
+import com.itheima.config.SpringConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.*;
 /**
  *@Author wjq
  *@Date 2021/6/6
@@ -15,7 +15,8 @@ import static org.junit.Assert.*;
  *@Description 测试类
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+//加载配置文件 注解的形式（加载的是java的字节码文件）
+@ContextConfiguration(classes = {SpringConfig.class})
 public class AccountServiceTest {
     //依赖注入
     @Autowired
