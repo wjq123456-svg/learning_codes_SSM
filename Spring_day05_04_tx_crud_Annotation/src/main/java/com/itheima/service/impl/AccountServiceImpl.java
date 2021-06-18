@@ -4,6 +4,8 @@ import com.itheima.dao.AccountDao;
 import com.itheima.pojo.Account;
 import com.itheima.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,13 +14,14 @@ import java.util.List;
  * @data:2021/6/14
  * @description:账户业务接口实现类
  */
+@Service("accountService")
+@Transactional
 public class AccountServiceImpl implements AccountService {
     //依赖注入dao
+    @Autowired
     private AccountDao accountDao;
 
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
+
 
     @Override
     public void transfer(String source, String target, double money) {
@@ -27,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
         sourceAccount.setMoney(sourceAccount.getMoney() - money);
         targetAccount.setMoney(targetAccount.getMoney() + money);
         accountDao.update(sourceAccount);
-        //int i=1/0;
+        int i=1/0;
         accountDao.update(targetAccount);
     }
 

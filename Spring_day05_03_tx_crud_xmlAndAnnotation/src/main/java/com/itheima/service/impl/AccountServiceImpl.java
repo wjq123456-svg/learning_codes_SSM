@@ -4,6 +4,9 @@ import com.itheima.dao.AccountDao;
 import com.itheima.pojo.Account;
 import com.itheima.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,13 +15,13 @@ import java.util.List;
  * @data:2021/6/14
  * @description:账户业务接口实现类
  */
+@Service
+//当前Service类中的所有方法，加入事务控制
+@Transactional
 public class AccountServiceImpl implements AccountService {
     //依赖注入dao
+    @Autowired
     private AccountDao accountDao;
-
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
 
     @Override
     public void transfer(String source, String target, double money) {
@@ -46,16 +49,19 @@ public class AccountServiceImpl implements AccountService {
         accountDao.update(account);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     @Override
     public Account findById(Integer id) {
         return accountDao.findById(id);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     @Override
     public Account findByName(String name) {
         return accountDao.findByName(name);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     @Override
     public List<Account> findAll() {
         return accountDao.findAll();

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--第一部分：SpringIOC相关配置-->
+    <!--配置dao-->
+    <!--1,加载properties文件-->
+    <context:property-placeholder location = "classpath:jdbc.properties"/>
+    <!--2,配置数据源-->
+    <bean id = "druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!--配置相关信息，  驱动，url ,用户名，密码-->
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--3,配置SqlSessionFactoryBean-->
+    <bean id ="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--配置相关内容：数据源  pojo别名-->
+        <property name="dataSource" ref="druidDataSource"></property>
+        <property name="typeAliasesPackage" value="com.itheima.pojo"></property>
+    </bean>
+    <!--4,配置dao代理的Mapper扫描器-->
+    <bean id ="scannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--配置相关内容 dao包扫描-->
+        <property name="basePackage" value="com.itheima.dao"></property>
+    </bean>
+
+    <!--配置service-->
+    <!--配置service的对象，完成依赖注入dao-->
+    <bean id="accountService" class="com.itheima.service.impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+
+    <!--第二部分：SpringAOP相关配置-->
+    <!--配置事务的步骤：
+                    1，配置事务管理器
+                    2，配置事务的通知
+                    3，配置事务的属性
+                    4，配置aop切入点表达式和事务通知的关联-->
+    <!--1，配置事务管理器-->
+    <bean id="transcationManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+        <!--配置相关内容（数据源）-->
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+    <!--2，配置事务的通知-->
+    <tx:advice id="txAdvice" transaction-manager="transcationManager">
+        <!--3，配置事务的属性-->
+        <tx:attributes>
+            <!--增、删、改-->
+            <tx:method name="*" read-only="false" propagation="REQUIRED" isolation="DEFAULT" timeout="-1" />
+            <!--查询-->
+            <tx:method name="find*" read-only="true" propagation="SUPPORTS" ></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    <!--4,配置aop切入点表达式和事务通知的关联-->
+    <aop:config>
+        <!--配置通用的切入点表达式-->
+        <aop:pointcut id="pc" expression="execution(* com.itheima.service..*.*(..))"/>
+        <!--配置切面类的增强方法 与切入点方法进行织入（绑定）-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc"></aop:advisor>
+    </aop:config>
+</beans>
