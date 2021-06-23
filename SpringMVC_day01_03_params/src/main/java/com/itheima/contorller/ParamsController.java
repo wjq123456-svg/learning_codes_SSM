@@ -3,6 +3,8 @@ package com.itheima.contorller;
 import com.itheima.contorller.pojo.QueryVo;
 import com.itheima.contorller.pojo.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -85,6 +87,34 @@ public class ParamsController {
     public ModelAndView gotoParamsMap(QueryVo queryVo, ModelAndView modelAndView){
         //指定数据
         modelAndView.addObject("nowDate", new Date()+"==="+queryVo);
+        //指定页面
+        modelAndView.setViewName("result");
+        return modelAndView;
+    }
+    //功能八：字符串转成日期对象
+    @RequestMapping("gotoParamsDate")
+    public ModelAndView gotoParamsDate(Date date, ModelAndView modelAndView){
+        //指定数据
+        modelAndView.addObject("nowDate", "gotoParamsDate==="+date);
+        //指定页面
+        modelAndView.setViewName("result");
+        return modelAndView;
+    }
+    //功能九：通过注解RequestHeader获取请求头中指定信息
+    @RequestMapping("gotoParamsRequestHeader")
+    public ModelAndView gotoParamsRequestHeader(@RequestHeader("Accept") String header, ModelAndView modelAndView){
+        //指定数据
+        modelAndView.addObject("nowDate", "gotoParamsRequestHeader==="+header);
+        //指定页面
+        modelAndView.setViewName("result");
+        return modelAndView;
+    }
+
+    //功能十：获取Cookie中的cookie值
+    @RequestMapping("gotoParamsCookie")
+    public ModelAndView gotoParamsRequestCookie(@CookieValue("JSESSIONID") String sessionId, ModelAndView modelAndView){
+        //指定数据
+        modelAndView.addObject("nowDate", "gotoParamssessionId==="+sessionId);
         //指定页面
         modelAndView.setViewName("result");
         return modelAndView;

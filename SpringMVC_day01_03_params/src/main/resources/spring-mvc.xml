@@ -14,5 +14,16 @@
 
 
     <!--配置SpringMVC注解驱动，其中包含配置处理器适配器  处理器映射器-->
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven conversion-service="myConversionService"></mvc:annotation-driven>
+
+
+    <!--配置格式化转换服务工厂对象-->
+    <bean id = "myConversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean id="dateConverter" class="com.itheima.utils.DateConverter"></bean>
+            </set>
+        </property>
+    </bean>
+
 </beans>

@@ -55,5 +55,17 @@
         <br/> <input type="submit" value="提交">
     </form>
 </FIELDSET>
+<FIELDSET>
+    <h4>功能八：字符串转成日期对象</h4>
+    <a href="/params/gotoParamsDate.do?date=2021-6-22">测试</a>
+</FIELDSET>
+<FIELDSET>
+    <h4>功能九：通过注解RequestHeader获取请求头中指定信息</h4>
+    <a href="/params/gotoParamsRequestHeader.do">测试</a>
+</FIELDSET>
+<FIELDSET>
+    <h4>功能十：获取Cookie中的cookie值</h4>
+    <a href="/params/gotoParamsCookie.do">测试</a>
+</FIELDSET>
 </body>
 </html>
