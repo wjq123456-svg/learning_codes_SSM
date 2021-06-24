@@ -9,31 +9,31 @@
 <html>
 <head>
     <title>首页</title>
+    <!--VUE使用的环境-->
+    <script src=""></script>
 </head>
 <body>
 <FIELDSET>
-    <h4>功能一：返回字符串（返回值是视图名称，数据使用Model接口）</h4>
-    <a href="/default/gotoResultModel.do">测试</a>
-</FIELDSET>
-<FIELDSET>
-    <h4>功能二：返回字符串（返回值视图名称，数据使用ModelMap类）</h4>
-    <a href="/default/gotoResultModelMap.do">测试</a>
-</FIELDSET>
-<FIELDSET>
-    <h4>功能三：返回VOID（使用Request对象，进行请求转发）</h4>
-    <a href="/default/gotoResultRequest.do">测试</a>
-</FIELDSET>
-<FIELDSET>
-    <h4>功能四：返回VOID（使用Response对象，进行页面的重定向）</h4>
-    <a href="/default/gotoResultResponse.do">测试</a>
-</FIELDSET>
-<FIELDSET>
-    <h4>功能五：返回String 通过SpringMVC格式，实现请求转发 不会执行SpringMVC中的视图解析器</h4>
-    <a href="/default/gotoResultForward.do">测试</a>
-</FIELDSET>
-<FIELDSET>
-    <h4>功能六：返回String（通过SpringMVC格式，实现重定向 不会执行SpringMVC中的视图解析器）</h4>
-    <a href="/default/gotoResultRedirect.do">测试</a>
+    <h4>Json格式数据实现Ajax交互</h4>
+    <div id="app">
+        <input type="button" value="测试ajax" @click="clickMe()">
+    </div>
 </FIELDSET>
 </body>
 </html>
+<script>
+    //创建Vue对象
+    new Vue({
+        el:"#app",
+        data:{
+            userList : []
+        },
+        methods:{
+            clickMe : function () {
+                //alert("hahah")
+                //使用axios中的post方法，发起ajax请求
+                axios.post()
+            }
+        }
+    });
+</script>
